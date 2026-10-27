@@ -1,9 +1,0 @@
-{
-  "install": {
-    "include": ["^package\\.json$", "^\\.env$"]
-  },
-  "restart": {
-    "exclude": ["^data/", "^\\.data/", "^.*\\.sqlite$", "^assets/"]
-  },
-  "throttle": 1000
-}
