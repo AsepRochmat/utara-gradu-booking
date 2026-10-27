@@ -1,3 +1,13 @@
+---
+title: UTARA GRADU - Booking Foto Wisuda
+emoji: 🎓
+colorFrom: red
+colorTo: yellow
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # UTARA GRADU - Graduation Photography Web Booking Platform 🎓📸
 
 Platform aplikasi web pemesanan (*booking*) sesi foto wisuda *on-location* (area kampus & spot outdoor) resmi dari **UTARA GRADU** (Instagram: `@utara.photo`, WhatsApp: `0821-2077-6606` a/n Tara).
