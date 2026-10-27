@@ -106,43 +106,43 @@ node server.js
 
 ## 🌐 Panduan Deploy ke Internet (Production Deployment)
 
-Sistem telah dikonfigurasi **100% Production-Ready** dengan dukungan port dinamis (`process.env.PORT || 8080`), pengikatan host `0.0.0.0`, sanitasi query database SQLite, serta spesifikasi engine Node.js `^22.5.0`.
+Aplikasi ini telah dirancang **100% Production-Ready** untuk berjalan secara gratis (zero-cost, tanpa perlu kartu kredit) menggunakan arsitektur modern:
+- **Frontend & Serverless API:** [Vercel](https://vercel.com) (Hosting global berkecepatan tinggi & SSL otomatis)
+- **Cloud Database SQLite:** [Turso](https://turso.tech) (Database SQLite berbasis Edge/LibSQL gratis hingga 9 GB)
 
-### Opsi 1: Deploy Gratis di Render.com (Sangat Direkomendasikan)
-1. Unggah (*push*) folder proyek ini ke repositori akun **GitHub** Anda.
-2. Buka [render.com](https://render.com) dan buat akun gratis.
-3. Klik tombol **New +** > **Web Service**.
-4. Hubungkan ke repositori GitHub proyek ini.
-5. Konfigurasi Service:
-   - **Environment:** `Node`
-   - **Build Command:** `npm install`
-   - **Start Command:** `npm start` (atau `node server.js`)
-   - **Plan:** Free
-6. Klik **Create Web Service**. Dalam waktu ~1-2 menit, web langsung aktif dengan HTTPS/SSL gratis (contoh: `https://utara-gradu.onrender.com`).
+---
 
-### Opsi 2: Deploy di Railway.app (Rekomendasi untuk Database SQLite Persisten)
-1. Buka [railway.app](https://railway.app) dan login dengan GitHub.
-2. Klik **New Project** > **Deploy from GitHub repo**.
-3. Railway akan otomatis mendeteksi Node.js dan menjalankan `npm start`.
-4. *(Opsional untuk data permanen):* Pada menu Settings service > **Volumes**, tambahkan Volume dengan mount path `/data` agar database SQLite tidak ter-reset saat ada deploy ulang.
+### 🚀 Cara Deploy: Vercel + Turso Cloud SQLite (Gratis & Permanen)
 
-### Opsi 3: Deploy di VPS Linux (Ubuntu / Debian dengan Nginx & PM2)
-1. Clone repo di server VPS:
-   ```bash
-   git clone <repo-url> && cd "web booking"
-   npm install
+#### Langkah 1: Buat Database Gratis di Turso
+1. Buka [turso.tech](https://turso.tech) dan login dengan akun GitHub Anda (`AsepRochmat`).
+2. Klik tombol **Create Database**, beri nama (misal: `utara-gradu`), dan pilih lokasi server terdekat (misal: **Singapore / `sin`**).
+3. Setelah database dibuat, salin **Database URL** yang berformat:
+   ```text
+   libsql://utara-gradu-aseprochmat.turso.io
    ```
-2. Jalankan dengan process manager **PM2**:
-   ```bash
-   npm install -g pm2
-   pm2 start server.js --name "utara-gradu"
-   pm2 save
-   pm2 startup
-   ```
-3. Arahkan domain Anda (misal: `booking.utaraphoto.com`) menggunakan Nginx reverse proxy ke `http://127.0.0.1:8080` dan pasang SSL gratis Let's Encrypt Certbot.
+4. Klik tab **Generate Token** / **Create Token**, lalu salin string token otentikasinya.
+
+#### Langkah 2: Deploy Proyek ke Vercel
+1. Buka [vercel.com/new](https://vercel.com/new) dan login dengan GitHub.
+2. Cari dan klik **Import** pada repositori `AsepRochmat/utara-gradu-booking`.
+3. Pada halaman konfigurasi (Configure Project), buka menu accordion **Environment Variables**, lalu tambahkan 2 variabel berikut:
+   - **Nama:** `TURSO_DATABASE_URL`  
+     **Nilai:** `libsql://utara-gradu-aseprochmat.turso.io` (URL dari Turso Anda)
+   - **Nama:** `TURSO_AUTH_TOKEN`  
+     **Nilai:** `ey...` (Token dari Turso Anda)
+4. Klik tombol **Deploy**.
+5. Dalam waktu ~20-30 detik, website Anda resmi aktif dengan domain HTTPS gratis (contoh: `https://utara-gradu-booking.vercel.app`)!
+
+> **Keunggulan Arsitektur Ini:**
+> - Data pesanan, konfigurasi nomor WhatsApp Kak Tara, paket harga, galeri, dan review tersimpan aman di cloud Turso SQLite.
+> - Tidak akan hilang atau ter-reset meski dyno/server restart.
+> - 100% Gratis selamanya tanpa meminta verifikasi kartu kredit.
+
+---
 
 ### Informasi Kredensial Penting:
-- **Akses Panel Admin:** `http://<domain-anda>/#/admin`
+- **Akses Panel Admin:** `https://<domain-vercel-anda>/#/admin`
 - **Kata Sandi Admin:** `admin123` (atau `tara123`)
 - **Nomor Kontak WhatsApp Kak Tara:** `+62 821-2077-6606`
 
@@ -152,6 +152,8 @@ Sistem telah dikonfigurasi **100% Production-Ready** dengan dukungan port dinami
 
 ```text
 web booking/
+├── api/
+│   └── index.js                    # Serverless Function Entry Point untuk Vercel
 ├── assets/
 │   ├── hero_graduation.jpg         # Foto hero potret wisudawati di Balairung
 │   ├── group_graduation.jpg        # Foto wisuda bersama keluarga di taman kampus
@@ -161,14 +163,15 @@ web booking/
 ├── css/
 │   └── style.css                   # Design system modern (CSS custom properties, glassmorphism)
 ├── data/
-│   └── utara_gradu.sqlite          # Database relasional SQLite (Bookings, Packages, Portfolio, Reviews, Config)
+│   └── utara_gradu.sqlite          # Database SQLite lokal (untuk mode offline/development)
 ├── js/
 │   └── app.js                      # Mesin logika aplikasi, ApiService, slot generator & WA modal
 ├── server/
-│   └── db.js                       # SQLite Database Access Layer (node:sqlite DatabaseSync)
+│   └── db.js                       # Dual-Mode Database DAO (Turso Cloud SQLite & Local SQLite)
 ├── index.html                      # Halaman utama responsif & semantik
-├── package.json                    # Konfigurasi dependensi Node.js (Express, Cors)
+├── package.json                    # Konfigurasi dependensi Node.js (@libsql/client, express, cors)
 ├── server.js                       # Server backend Express & REST API endpoints
+├── vercel.json                     # Konfigurasi routing serverless Vercel
 ├── PRD.md                          # Dokumen Product Requirement Document
 ├── start_server.bat                # Script batch runner server lokal (node server.js)
 └── README.md                       # Panduan dokumentasi lengkap proyek
