@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UTARA GRADU - Booking Foto Wisuda On-Location & Outdoor</title>
+  <meta name="description"
+    content="Layanan booking sesi foto wisuda kampus dan outdoor terbaik oleh UTARA GRADU. Pilihan paket Basic, Combo, dan Premium dengan slot jam bulat teratur serta konfirmasi instan via WhatsApp.">
+  <meta name="theme-color" content="#b3423f">
+
+  <!-- Favicon Official Logo UTARA GRADU -->
+  <link rel="icon" type="image/svg+xml" href="assets/logo_utara.svg?v=2">
+  <link rel="alternate icon" type="image/png" href="assets/logo_utara.png?v=2">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#/beranda" class="brand-logo" id="brandLogo" onclick="navigateToPage('beranda'); return false;">
+        <img src="assets/logo_utara.svg?v=2" alt="UTARA GRADU Logo" class="brand-logo-img"
+          onerror="this.onerror=null; this.src='assets/logo_utara.png?v=2'">
+        <div class="brand-text">UTARA <span>GRADU</span></div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#/beranda" class="nav-link active" onclick="navigateToPage('beranda'); return false;"
+            id="navLinkBeranda">Beranda</a></li>
+        <li><a href="#/paket" class="nav-link" onclick="navigateToPage('paket'); return false;"
+            id="navLinkKatalog">Pilihan Paket</a></li>
+        <li><a href="#/portofolio" class="nav-link" onclick="navigateToPage('portofolio'); return false;"
+            id="navLinkPortofolio">Portofolio</a></li>
+        <li><a href="#/booking" class="nav-link" onclick="navigateToPage('booking'); return false;"
+            id="navLinkBooking">Form Reservasi</a></li>
+        <li><a href="#/rating" class="nav-link" onclick="navigateToPage('rating'); return false;"
+            id="navLinkRating">Rating & Ulasan</a></li>
+        <li><a href="#/admin" class="nav-link" onclick="navigateToPage('admin'); return false;" id="navLinkAdmin">Panel
+            Admin</a></li>
+        <li><a href="javascript:void(0)" onclick="openModal('trackBookingModal')" class="nav-link" id="navLinkTracker"
+            style="color: var(--primary);">🔍 Cek Status Booking</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Auth Status Container (Hanya untuk Admin Studio Kak Tara) -->
+        <div id="navAuthContainer">
+          <button type="button" class="btn btn-outline-gold btn-sm" onclick="openAdminLoginModal()" id="navAdminBtn">
+            🔒 Admin
+          </button>
+        </div>
+
+        <!-- Hamburger Menu Button for Mobile -->
+        <button type="button" class="hamburger-btn" onclick="openMobileDrawer()" aria-label="Buka Menu Navigasi">
+          ☰
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer Navigation -->
+  <div class="drawer-backdrop" id="mobileDrawerBackdrop">
+    <div class="mobile-drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <div class="brand-logo" style="font-size: 1.15rem;">
+          <img src="assets/logo_utara.svg?v=2" alt="UTARA GRADU Logo" class="brand-logo-img"
+            style="width: 36px; height: 36px;" onerror="this.onerror=null; this.src='assets/logo_utara.png?v=2'">
+          <div class="brand-text">UTARA <span>GRADU</span></div>
+        </div>
+        <button class="modal-close-btn" onclick="closeMobileDrawer()">&times;</button>
+      </div>
+
+      <ul class="drawer-links">
+        <li>
+          <a href="#/beranda" class="drawer-link active"
+            onclick="navigateToPage('beranda'); closeMobileDrawer(); return false;">
+            <span>🏠</span> Beranda
+          </a>
+        </li>
+        <li>
+          <a href="#/paket" class="drawer-link" onclick="navigateToPage('paket'); closeMobileDrawer(); return false;">
+            <span>📦</span> Pilihan Paket
+          </a>
+        </li>
+        <li>
+          <a href="#/portofolio" class="drawer-link"
+            onclick="navigateToPage('portofolio'); closeMobileDrawer(); return false;">
+            <span>📸</span> Portofolio Wisuda
+          </a>
+        </li>
+        <li>
+          <a href="#/booking" class="drawer-link"
+            onclick="navigateToPage('booking'); closeMobileDrawer(); return false;">
+            <span>📅</span> Form Reservasi
+          </a>
+        </li>
+        <li>
+          <a href="#/rating" class="drawer-link" onclick="navigateToPage('rating'); closeMobileDrawer(); return false;">
+            <span>⭐</span> Rating Pelayanan
+          </a>
+        </li>
+        <li>
+          <a href="#/admin" class="drawer-link" id="drawerAdminLink" onclick="handleDrawerAdminClick(); return false;">
+            <span id="drawerAdminIcon">🔒</span> Panel Admin (Tara)
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)" class="drawer-link"
+            onclick="closeMobileDrawer(); openModal('trackBookingModal');" style="color: var(--primary);">
+            <span>🔍</span> Cek Status Booking
+          </a>
+        </li>
+      </ul>
+
+      <div class="drawer-footer">
+        <div id="drawerAdminContainer" style="margin-bottom: 0.6rem;"></div>
+        <a href="https://wa.me/6282120776606?text=Halo%20Kak%20Tara%20UTARA%20GRADU%2C%20saya%20ingin%20tanya%20seputar%20booking%20foto%20wisuda"
+          target="_blank" class="btn btn-wa btn-full btn-sm">
+          📲 Chat Kak Tara via WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 1: Beranda & Pilihan Paket -->
+  <div class="page-view active" id="page-beranda">
+    <!-- Hero Section -->
+    <header class="hero-section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <span class="badge badge-gold">🎓 Official Graduation Photography Service by UTARA GRADU</span>
+          </div>
+          <h1 class="hero-title">
+            Abadikan Momen Kelulusan dengan <span class="gradient-text">Karya Terbaik</span>
+          </h1>
+          <p class="hero-subtitle">
+            Layanan dokumentasi foto wisuda <em>on-location</em> di spot kampus dan outdoor pilihan Anda. Tanpa jadwal
+            bentrok dengan sistem slot jam bulat serta konfirmasi resmi instan via WhatsApp.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#/booking" class="btn btn-primary btn-lg" id="heroBookingCta"
+              onclick="navigateToPage('booking'); return false;">
+              📅 Booking Jadwal Sekarang
+            </a>
+            <button type="button" class="btn btn-secondary btn-lg" onclick="openModal('trackBookingModal')">
+              🔍 Cek Status Booking
+            </button>
+            <a href="#/paket" class="btn btn-outline-gold btn-lg" id="heroKatalogCta"
+              onclick="navigateToPage('paket'); return false;">
+              Lihat Paket
+            </a>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="stat-item">
+              <span class="stat-number">500+</span>
+              <span class="stat-label">Wisudawan Terdokumentasi</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">4.9 / 5.0</span>
+              <span class="stat-label">Rating Kepuasan Layanan</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Garansi Slot Jam Bulat</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual-wrapper">
+          <div class="hero-img-card">
+            <img src="assets/hero_graduation.jpg" alt="Foto Wisuda Outdoor Kampus Eksklusif" id="heroImage">
+            <div class="hero-floating-badge">
+              <div class="badge-icon-box">📸</div>
+              <div>
+                <div class="badge-info-title">Sesi Kampus & Outdoor Bebas</div>
+                <div class="badge-info-sub">Titik temu sesuai pilihan wisudawan</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Section 1: Katalog Paket Wisuda -->
+    <section class="packages-section" id="katalog">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="badge badge-teal">Pilihan Paket Wisuda</span>
+          </div>
+          <h2 class="section-title">Transparan, Lengkap & Terencana</h2>
+          <p class="section-description">
+            Tersedia paket foto solo hingga pendamping keluarga besar dengan durasi 1 jam dan 2 jam penuh.
+          </p>
+        </div>
+
+        <!-- Packages Dynamic Cards Grid -->
+        <div class="packages-grid" id="packagesContainer">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Teaser Portofolio & Keunggulan UTARA GRADU -->
+    <section
+      style="padding: 3.5rem 0; border-top: 1px solid var(--border-subtle); background: linear-gradient(180deg, transparent 0%, rgba(20, 26, 41, 0.45) 50%, transparent 100%);">
+      <div class="container" style="text-align: center;">
+        <div class="section-tag"><span class="badge badge-emerald">Dokumentasi Nyata</span></div>
+        <h2 style="font-size: 1.85rem; margin: 0.5rem 0 1rem;">Lihat Ragam Inspirasi Foto Wisuda</h2>
+        <p style="color: var(--text-secondary); max-width: 620px; margin: 0 auto 1.5rem;">
+          Ratusan wisudawan telah mempercayakan momen kelulusan terbaik mereka bersama kami. Kunjungi galeri portofolio
+          lengkap untuk melihat inspirasi pose di berbagai kampus.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="#/portofolio" class="btn btn-outline-gold btn-lg"
+            onclick="navigateToPage('portofolio'); return false;">
+            📸 Buka Galeri Portofolio
+          </a>
+          <a href="#/booking" class="btn btn-primary btn-lg" onclick="navigateToPage('booking'); return false;">
+            📅 Reservasi Jadwal Sekarang
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Page 2: Form Reservasi Sesi Wisuda -->
+  <div class="page-view" id="page-booking">
+    <section class="booking-section" id="bookingSection" style="padding-top: 2.5rem;">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="badge badge-gold">Formulir Pemesanan</span>
+          </div>
+          <h2 class="section-title">Reservasi Jadwal Foto Wisuda</h2>
+          <p class="section-description">
+            Pilih tanggal dan slot jam bulat yang tersedia. Sistem kami otomatis mengamankan jadwal tanpa risiko
+            bentrok.
+          </p>
+        </div>
+
+        <div class="booking-card-wrapper">
+          <div class="booking-grid">
+            <!-- Left: Multi-step interactive form -->
+            <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+
+              <!-- Step 1: Tanggal & Waktu Sesi -->
+              <div class="form-step">
+                <h3 class="form-step-title">
+                  <span class="step-number">1</span>
+                  Pilih Tanggal, Durasi & Slot Jam
+                </h3>
+
+                <div class="form-group">
+                  <label for="bookingDate" class="form-label">
+                    Tanggal Sesi Wisuda <span class="required">*</span>
+                  </label>
+                  <input type="date" id="bookingDate" class="form-input" required>
+                  <div class="form-hint">Minimal H+1 dari hari ini. Jam operasional pemotretan: <strong>06.00 - 16.00
+                      WIB</strong>.</div>
+                </div>
+
+                <!-- Pilihan Durasi Sesi (1 Jam vs 2 Jam) -->
+                <div class="form-group">
+                  <label class="form-label">
+                    Pilihan Durasi Sesi Foto <span class="required">*</span>
+                  </label>
+                  <div class="duration-selector-grid">
+                    <button type="button" class="duration-card-btn" id="durationBtn-1" onclick="selectDuration(1)">
+                      <div class="duration-card-badge">1 JAM</div>
+                      <div class="duration-card-header">
+                        <span class="duration-card-icon">⏱️</span>
+                        <strong class="duration-card-title">Sesi 1 Jam</strong>
+                      </div>
+                      <p class="duration-card-desc">Paket Solo / Basic (1 Orang Wisudawan)</p>
+                      <div class="duration-card-select-hint">Klik untuk memilih</div>
+                    </button>
+
+                    <button type="button" class="duration-card-btn active" id="durationBtn-2"
+                      onclick="selectDuration(2)">
+                      <div class="duration-card-badge">2 JAM</div>
+                      <div class="duration-card-header">
+                        <span class="duration-card-icon">⏱️</span>
+                        <strong class="duration-card-title">Sesi 2 Jam</strong>
+                      </div>
+                      <p class="duration-card-desc">Paket Combo & Premium (Bersama Sahabat / Keluarga)</p>
+                      <div class="duration-card-select-hint">Klik untuk memilih</div>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Pilihan Paket Berdasarkan Durasi -->
+                <div class="form-group" id="packagePickerGroup">
+                  <label class="form-label">
+                    Pilihan Paket Wisuda <span class="required">*</span>
+                  </label>
+                  <div class="package-selector-pills" id="packageSelectorPills">
+                    <!-- Rendered dynamically by app.js -->
+                  </div>
+                </div>
+
+                <div class="form-group slot-picker-container">
+                  <label class="form-label">
+                    Pilih Slot Jam Sesi (Mulai 06.00 - 16.00 WIB) <span class="required">*</span>
+                  </label>
+                  <div class="slot-grid" id="slotsContainer">
+                    <!-- Rendered dynamically based on package duration and conflicts -->
+                  </div>
+                  <div class="form-hint">
+                    Slot dengan label <span style="color:var(--accent-rose); font-weight:700;">Terisi</span> tidak dapat
+                    dipilih kembali untuk mencegah tumpang tindih jadwal.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 2: Registrasi Data Customer -->
+              <div class="form-step" style="margin-top: 2.5rem;">
+                <h3 class="form-step-title">
+                  <span class="step-number">2</span>
+                  Registrasi Data Wisudawan
+                </h3>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="custName" class="form-label">Nama Lengkap Wisudawan <span
+                        class="required">*</span></label>
+                    <input type="text" id="custName" class="form-input" placeholder="contoh: Sarah Amalia, S.Ked"
+                      required>
+                  </div>
+                  <div class="form-group">
+                    <label for="custPhone" class="form-label">No. Telepon / WhatsApp <span
+                        class="required">*</span></label>
+                    <input type="tel" id="custPhone" class="form-input" placeholder="081234567890" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="custIg" class="form-label">Nick / Akun Instagram</label>
+                    <input type="text" id="custIg" class="form-input" placeholder="@username">
+                    <div class="form-hint">Untuk keperluan penandaan (tagging) foto teaser.</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="custUniv" class="form-label">Nama Universitas <span class="required">*</span></label>
+                    <input type="text" id="custUniv" class="form-input"
+                      placeholder="Ketik nama kampus Anda (e.g. Universitas Indonesia)" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="custLocation" class="form-label">Lokasi Photo (Spot Kampus / Outdoor) <span
+                      class="required">*</span></label>
+                  <input type="text" id="custLocation" class="form-input"
+                    placeholder="Ketik titik temu / spot (e.g. Balairung Rektorat Kampus Depok, Taman Danau UI)"
+                    required>
+                  <div class="form-hint">Tuliskan titik kumpul atau spot foto yang Anda rencanakan.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="custNotes" class="form-label">Catatan Khusus (Opsional)</label>
+                  <textarea id="custNotes" class="form-textarea"
+                    placeholder="Contoh: Membawa 2 toga tambahan, ada 1 kakek berkursi roda, membawa selempang custom..."></textarea>
+                </div>
+              </div>
+
+              <!-- Step 3: Informasi Pembayaran DP (Transfer BCA & Scan QRIS) -->
+              <div class="form-step" style="margin-top: 2.25rem;">
+                <h3 class="form-step-title">
+                  <span class="step-number">3</span>
+                  Metode Pembayaran Uang Muka (DP Rp 100.000)
+                </h3>
+
+                <div class="qris-payment-box">
+                  <div class="qris-info-col">
+                    <div class="badge badge-emerald" style="margin-bottom: 0.6rem;">⚡ Pembayaran Otomatis & Cepat</div>
+                    <h4 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.35rem;">Scan QRIS Resmi
+                      UTARA GRADU</h4>
+                    <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0.85rem;">
+                      Dukungan pembayaran instan dari <strong>BCA Mobile, Livin Mandiri, BRImo, BNI</strong> serta
+                      seluruh E-Wallet (<strong>GoPay, OVO, DANA, ShopeePay</strong>).
+                    </p>
+
+                    <div class="qris-detail-list">
+                      <div class="qris-detail-item">
+                        <span class="qris-detail-label">Nominal DP Pengunci Slot:</span>
+                        <strong class="qris-detail-value" style="color: var(--accent-emerald);">Rp 100.000 (Sisa
+                          pelunasan saat hari-H)</strong>
+                      </div>
+                      <div class="qris-detail-item">
+                        <span class="qris-detail-label">Pilihan 1: Scan Foto QRIS</span>
+                        <span class="qris-detail-value">Arahkan kamera / scan dari aplikasi m-Banking atau E-Wallet
+                          Anda.</span>
+                      </div>
+                      <div class="qris-detail-item">
+                        <span class="qris-detail-label">Pilihan 2: Transfer Manual Bank BCA</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                          <span class="qris-detail-value">No. Rekening: <strong>1234-5678-90</strong> a/n Tara</span>
+                          <button type="button" class="btn btn-secondary btn-xs" onclick="copyBcaAccount()">📋 Salin
+                            Rekening</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="qris-visual-col">
+                    <div class="qris-card-preview" onclick="openQrisModal()"
+                      title="Klik untuk memperbesar / simpan foto QRIS">
+                      <img src="assets/qris_utara_gradu.svg" alt="Foto QRIS UTARA GRADU"
+                        class="qris-img dynamic-qris-img">
+                      <div class="qris-hover-overlay">
+                        <span>🔍 Perbesar QRIS</span>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-gold btn-xs btn-full" onclick="openQrisModal()"
+                      style="margin-top: 0.5rem;">
+                      🔍 Buka & Simpan QRIS
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary btn-lg btn-full" id="btnSubmitBooking">
+                  🔒 Kunci Jadwal & Lanjut Konfirmasi WhatsApp
+                </button>
+              </div>
+            </form>
+
+            <!-- Right: Order Summary Sticky Card -->
+            <aside>
+              <div class="order-summary-card">
+                <h3 class="summary-title">Ringkasan Reservasi</h3>
+
+                <div class="summary-row">
+                  <span>Paket Terpilih:</span>
+                  <strong id="summaryPkgName" style="color:var(--primary);">Paket Combo</strong>
+                </div>
+                <div class="summary-row">
+                  <span>Alokasi Durasi:</span>
+                  <span id="summaryDuration">2 Jam Sesi Penuh</span>
+                </div>
+                <div class="summary-row">
+                  <span>Tanggal Sesi:</span>
+                  <span id="summaryDate">-</span>
+                </div>
+                <div class="summary-row bold">
+                  <span>Slot Jam Terpilih:</span>
+                  <span id="summarySlot" style="color:var(--accent-teal);">Pilih slot jam</span>
+                </div>
+
+                <div class="dp-alert-box">
+                  ℹ️ <strong>Komitmen Down Payment (DP):</strong> Diperlukan DP sebesar <strong>Rp 100.000</strong>
+                  untuk mengunci slot jadwal secara resmi. Sisa biaya dapat dilunasi pada hari-H pemotretan.
+                </div>
+
+                <div class="summary-row total">
+                  <span>Total Biaya:</span>
+                  <span id="summaryTotal">Rp 500.000</span>
+                </div>
+                <div class="summary-row" style="font-size: 0.85rem; color: var(--accent-emerald);">
+                  <span>Kewajiban DP:</span>
+                  <strong id="summaryDp">Rp 100.000</strong>
+                </div>
+
+                <!-- QRIS DP Quick Access in Summary -->
+                <div class="summary-qris-card" onclick="openQrisModal()"
+                  title="Klik untuk memperbesar / scan foto QRIS">
+                  <div style="display: flex; gap: 0.75rem; align-items: center;">
+                    <img src="assets/qris_utara_gradu.svg" alt="Scan QRIS" class="summary-qris-thumb dynamic-qris-img">
+                    <div style="flex-grow: 1;">
+                      <div style="display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.15rem;">
+                        <span
+                          style="font-size: 0.72rem; font-weight: 700; background: rgba(245,158,11,0.2); color: #fbbf24; padding: 0.15rem 0.45rem; border-radius: 4px;">QRIS</span>
+                        <strong style="font-size: 0.85rem; color: var(--text-main);">Scan Bayar DP</strong>
+                      </div>
+                      <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0; line-height: 1.25;">
+                        BCA Mobile, Livin, GoPay, OVO, Dana, ShopeePay
+                      </p>
+                      <span
+                        style="font-size: 0.72rem; color: var(--accent-teal); font-weight: 600; text-decoration: underline;">
+                        Klik untuk Buka QRIS 🔍
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Page 3: Galeri Portofolio Wisuda -->
+  <div class="page-view" id="page-portofolio">
+    <section class="portfolio-section" id="portofolio" style="padding-top: 2.5rem;">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="badge badge-emerald">Inspirasi & Galeri Karya</span>
+          </div>
+          <h2 class="section-title">Portofolio Wisuda UTARA GRADU</h2>
+          <p class="section-description">
+            Lihat ragam inspirasi pose, eksplorasi spot kampus, dan keceriaan wisudawan bersama fotografer profesional
+            kami.
+          </p>
+        </div>
+
+        <!-- Portfolio Category Filter Buttons -->
+        <div class="portfolio-filters">
+          <button type="button" class="portfolio-filter-btn active" data-filter="all" onclick="filterPortfolio('all')">
+            Semua Karya
+          </button>
+          <button type="button" class="portfolio-filter-btn" data-filter="solo" onclick="filterPortfolio('solo')">
+            🎓 Solo Portrait
+          </button>
+          <button type="button" class="portfolio-filter-btn" data-filter="besties" onclick="filterPortfolio('besties')">
+            🎉 Sahabat & Grup
+          </button>
+          <button type="button" class="portfolio-filter-btn" data-filter="family" onclick="filterPortfolio('family')">
+            👨‍👩‍👧‍👦 Keluarga
+          </button>
+        </div>
+
+        <!-- Portfolio Dynamic Grid -->
+        <div class="portfolio-grid" id="portfolioGridContainer">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+
+        <!-- Bottom Booking CTA in Portfolio Page -->
+        <div
+          style="margin-top: 3.5rem; text-align: center; background: var(--bg-card); border: 1px solid var(--border-highlight); border-radius: var(--radius-lg); padding: 2.5rem 1.5rem; box-shadow: var(--shadow-glow);">
+          <h3 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Suka dengan Hasil Dokumentasi Kami? 🎓✨</h3>
+          <p style="color: var(--text-secondary); max-width: 580px; margin: 0 auto 1.5rem;">
+            Jangan biarkan momen kelulusan sekali seumur hidup terlewat tanpa foto berkesan. Amankan slot jam bulat Anda
+            sekarang bersama UTARA GRADU.
+          </p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="#/booking" class="btn btn-primary btn-lg" onclick="navigateToPage('booking'); return false;">
+              📅 Pesan Sesi Wisuda Sekarang
+            </a>
+            <a href="https://wa.me/6282120776606" target="_blank" class="btn btn-wa btn-lg">
+              📲 Tanya Kak Tara di WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Page 4: Rating & Ulasan Pelayanan -->
+  <div class="page-view" id="page-rating">
+    <section class="reviews-section" id="ratingSection" style="padding-top: 2.5rem;">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="badge badge-rose">Social Proof & Kepuasan</span>
+          </div>
+          <h2 class="section-title">Rating Pelayanan Wisudawan</h2>
+          <p class="section-description">
+            Lihat apa kata para wisudawan yang telah mempercayakan dokumentasi momen kelulusannya kepada kami.
+          </p>
+        </div>
+
+        <!-- Rating Overview Card -->
+        <div class="rating-overview-card">
+          <div class="score-display">
+            <div class="big-rating-number" id="averageScore">5.0</div>
+            <div class="stars-row" id="starsHeader">★★★★★</div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);" id="totalReviews">
+              3 Wisudawan Telah Memberikan Ulasan
+            </div>
+          </div>
+
+          <div class="rating-bars-col" id="ratingBarsContainer">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <div class="rating-cta-col">
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+              Sudah pernah menggunakan jasa pemotretan kami? Bagikan pengalaman Anda.
+            </p>
+            <button type="button" class="btn btn-primary" onclick="handleOpenReviewModal()" id="btnWriteReview">
+              ✍️ Beri Rating Pelayanan
+            </button>
+            <div style="font-size: 0.75rem; color: var(--accent-emerald);">
+              ✨ Terbuka untuk semua wisudawan tanpa perlu login
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews Grid -->
+        <div class="reviews-grid" id="reviewsList">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Page 5: Panel Pengelola Studio (Admin) -->
+  <div class="page-view" id="page-admin">
+    <!-- Admin Lock Screen (Tampil jika belum login sebagai Admin) -->
+    <div id="adminLockScreen" class="container"
+      style="display: none; padding: 4.5rem 1rem; text-align: center; max-width: 520px; margin: 0 auto;">
+      <div
+        style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 2.5rem 1.5rem; box-shadow: var(--shadow-lg);">
+        <div style="font-size: 3.2rem; margin-bottom: 0.75rem;">🔒👑</div>
+        <h2 style="margin-bottom: 0.5rem;">Panel Khusus Admin Studio</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--text-secondary); font-size: 0.95rem;">
+          Halaman ini khusus untuk <strong>Kak Tara (Admin UTARA GRADU)</strong> guna memantau kalender jadwal,
+          verifikasi DP wisudawan, dan manajemen paket.
+        </p>
+        <button type="button" class="btn btn-primary btn-lg btn-full" onclick="openAdminLoginModal()">
+          🔓 Masuk dengan Kata Sandi Admin
+        </button>
+      </div>
+    </div>
+
+    <section class="admin-section" id="adminSection" style="padding-top: 2.5rem;">
+      <div class="container">
+        <div class="admin-header-bar">
+          <div>
+            <span class="badge badge-teal" style="margin-bottom: 0.4rem;">Panel Pengelola Studio</span>
+            <h2>Master Data & Manajemen Booking</h2>
+          </div>
+
+          <div class="admin-tabs">
+            <button class="admin-tab-btn active" id="tabBtn-bookings" onclick="switchAdminTab('bookings')">
+              📋 Daftar Pesanan
+            </button>
+            <button class="admin-tab-btn" id="tabBtn-calendar" onclick="switchAdminTab('calendar')">
+              📅 Kalender & Timeline Sesi
+            </button>
+            <button class="admin-tab-btn" id="tabBtn-packages" onclick="switchAdminTab('packages')">
+              📦 Master Paket
+            </button>
+            <button class="admin-tab-btn" id="tabBtn-reviews" onclick="switchAdminTab('reviews')">
+              ⭐ Moderasi Rating
+            </button>
+            <button class="admin-tab-btn" id="tabBtn-settings" onclick="switchAdminTab('settings')">
+              ⚙️ Rekening & WA
+            </button>
+            <button class="admin-tab-btn" id="tabBtn-portfolio" onclick="switchAdminTab('portfolio')">
+              📸 Kelola Portofolio
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 1: Manajemen Pesanan Masuk -->
+        <div id="adminBookingsTab">
+          <div class="admin-action-bar">
+            <div class="admin-filter-group">
+              <input type="text" id="adminBookingSearch" class="form-input" placeholder="Cari nama, univ, atau kode..."
+                style="max-width: 280px;">
+              <select id="adminStatusFilter" class="form-select" style="max-width: 180px;">
+                <option value="ALL">Semua Status</option>
+                <option value="PENDING_DP">Pending DP</option>
+                <option value="CONFIRMED">Terkonfirmasi (DP Masuk)</option>
+                <option value="COMPLETED">Selesai</option>
+                <option value="CANCELLED">Dibatalkan</option>
+              </select>
+            </div>
+            <div>
+              <button type="button" class="btn btn-emerald btn-sm" onclick="exportBookingsToCSV()">
+                📥 Unduh Rekap (CSV/Excel)
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-table-card">
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Kode & Waktu Booking</th>
+                    <th>Data Wisudawan</th>
+                    <th>Paket & Biaya</th>
+                    <th>Tanggal & Jam Sesi</th>
+                    <th>Universitas & Spot</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="adminBookingsTableBody">
+                  <!-- Rendered dynamically by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Master Data Paket Wisuda -->
+        <div id="adminPackagesTab" style="display: none;">
+          <div
+            style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <p style="color: var(--text-secondary); margin: 0;">
+              Kelola harga, durasi jam, dan fitur paket wisuda yang aktif pada katalog UTARA GRADU.
+            </p>
+            <button type="button" class="btn btn-primary btn-sm" onclick="openPackageModal()">
+              + Tambah Paket Baru
+            </button>
+          </div>
+          <div id="adminPackagesList">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Tab 3: Moderasi Rating Pelayanan -->
+        <div id="adminReviewsTab" style="display: none;">
+          <p style="color: var(--text-secondary); margin-bottom: 1.25rem;">
+            Pantau seluruh testimoni masuk. Anda dapat menyembunyikan ulasan jika terdeteksi spam.
+          </p>
+          <div id="adminReviewsList">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Tab 4: Pengaturan Master Rekening & WA -->
+        <div id="adminSettingsTab" style="display: none;">
+          <div class="booking-card-wrapper" style="max-width: 600px;">
+            <h3 style="margin-bottom: 1.25rem;">Konfigurasi Rekening Pembayaran DP & WhatsApp</h3>
+            <form onsubmit="handleSaveSettings(event)">
+              <div class="form-group">
+                <label class="form-label">Nomor Rekening Bank BCA</label>
+                <input type="text" id="settingBankAccount" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nama Pemilik Rekening</label>
+                <input type="text" id="settingBankHolder" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nomor WhatsApp Admin (Format 62xxx)</label>
+                <input type="text" id="settingWaNumber" class="form-input" required>
+                <div class="form-hint">Nomor tujuan penerima konfirmasi chat dari pelanggan.</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nominal Down Payment (DP) Standar</label>
+                <input type="number" id="settingDpAmount" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Foto / Gambar Barcode QRIS Pembayaran DP</label>
+                <div
+                  style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem; background: rgba(12,15,23,0.6); padding: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                  <img id="settingQrisPreview" src="assets/qris_utara_gradu.svg" class="dynamic-qris-img"
+                    style="width: 65px; height: 88px; object-fit: contain; background: #fff; border-radius: 6px; padding: 3px; border: 1px solid var(--border-subtle); flex-shrink: 0;">
+                  <div style="flex-grow: 1;">
+                    <label class="form-label" style="font-size: 0.8rem; margin-bottom: 0.3rem;">Unggah Gambar QRIS Baru
+                      (JPG / PNG / SVG):</label>
+                    <input type="file" id="settingQrisFile" accept="image/*" class="form-input"
+                      style="padding: 0.4rem; font-size: 0.82rem;" onchange="previewSettingQris(this)">
+                    <div class="form-hint" style="margin-top: 0.35rem;">Pilih foto QRIS asli studio Anda untuk langsung
+                      mengganti QRIS di seluruh web.</div>
+                    <button type="button" class="btn btn-secondary btn-xs" onclick="resetDefaultQris()"
+                      style="margin-top: 0.4rem;">
+                      ↺ Reset ke QRIS Bawaan
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                Simpan Pengaturan
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Tab 5: Kalender & Timeline Sesi Harian Studio -->
+        <div id="adminCalendarTab" style="display: none;">
+          <div
+            style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <p style="color: var(--text-secondary); margin: 0;">
+                Pantau kepastian jadwal sesi pemotretan wisuda harian berdasarkan jam bulat dan lokasi kampus.
+              </p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <label for="adminCalendarDatePicker"
+                style="font-size: 0.88rem; font-weight: 600; color: var(--text-secondary);">Pilih Tanggal Sesi:</label>
+              <input type="date" id="adminCalendarDatePicker" class="form-input"
+                style="padding: 0.5rem 0.85rem; width: auto;" onchange="renderAdminCalendar()">
+            </div>
+          </div>
+
+          <!-- Daily Metric Cards -->
+          <div class="calendar-summary-cards" id="adminCalendarMetrics">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- Schedule Slots Timeline -->
+          <div class="schedule-timeline-container" id="adminCalendarTimeline">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Tab 6: Kelola Foto Portofolio Wisuda -->
+        <div id="adminPortfolioTab" style="display: none;">
+          <div
+            style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Foto & Galeri Dokumentasi Wisuda</h3>
+              <p style="color: var(--text-secondary); margin: 0; font-size: 0.88rem;">
+                Tambah foto hasil pemotretan baru, perbarui judul atau kategori, dan hapus foto dari galeri portofolio.
+              </p>
+            </div>
+            <div>
+              <button type="button" class="btn btn-primary btn-sm" onclick="openPortfolioModal()">
+                ➕ Tambah Foto Portofolio
+              </button>
+            </div>
+          </div>
+
+          <!-- Admin Portfolio Grid Cards -->
+          <div class="admin-portfolio-grid" id="adminPortfolioList">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal 1: Booking Success & WhatsApp Confirmation -->
+  <div class="modal-backdrop" id="bookingSuccessModal">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeModal('bookingSuccessModal')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎉🎓</div>
+        <h3 class="modal-title">Booking Berhasil Dicatat!</h3>
+        <p class="modal-subtitle">Slot Anda telah diamankan sementara.</p>
+        <span class="badge badge-gold" id="waModalBookingCode" style="font-size: 0.95rem; padding: 0.4rem 1rem;">
+          #WD-20261027-101
+        </span>
+      </div>
+
+      <div id="waModalDetails">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div
+        style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-md); padding: 1.15rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+          <div style="flex-shrink: 0; text-align: center; cursor: pointer;" onclick="openQrisModal()"
+            title="Klik untuk memperbesar QRIS">
+            <img src="assets/qris_utara_gradu.svg" alt="QRIS DP UTARA GRADU"
+              style="width: 78px; height: 104px; object-fit: contain; background: #fff; border-radius: 8px; padding: 3px; border: 1px solid rgba(255,255,255,0.2); box-shadow: var(--shadow-sm); display: block;">
+            <span
+              style="font-size: 0.72rem; color: var(--accent-teal); font-weight: 700; margin-top: 0.25rem; display: block;">🔍
+              Perbesar</span>
+          </div>
+          <div style="flex-grow: 1; font-size: 0.88rem;">
+            <div style="font-weight: 700; color: #fbbf24; margin-bottom: 0.25rem;">Instruksi Pembayaran DP Rp 100.000:
+            </div>
+            <div>Pilihan 1: <strong>Scan QRIS Resmi</strong> di samping via m-Banking atau E-Wallet.</div>
+            <div style="margin-top: 0.35rem;">Pilihan 2 (Transfer Manual):</div>
+            <div
+              style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.15rem;">
+              <span>Bank BCA: 1234-5678-90</span>
+              <button type="button" class="btn btn-secondary btn-xs" onclick="copyBcaAccount()">📋 Salin</button>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-secondary);">a/n Tara (UTARA GRADU)</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <a href="#" class="btn btn-wa btn-lg btn-full" id="waModalSendBtn">
+          📲 Kirim Konfirmasi ke WhatsApp Sekarang
+        </a>
+        <button type="button" class="btn btn-outline-gold btn-full"
+          onclick="printBookingReceipt(window.currentBookingCode)">
+          🖨️ Cetak / Simpan E-Receipt (PDF)
+        </button>
+        <button type="button" class="btn btn-secondary btn-full" onclick="copyWaMessage()">
+          📋 Salin Rincian Pesanan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Login Khusus Admin Studio (Kak Tara) -->
+  <div class="modal-backdrop" id="adminLoginModal">
+    <div class="modal-box" style="max-width: 440px;">
+      <button class="modal-close-btn" onclick="closeModal('adminLoginModal')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.2rem; margin-bottom: 0.25rem;">🔒👑</div>
+        <h3 class="modal-title">Login Admin Studio</h3>
+        <p class="modal-subtitle">Akses khusus Kak Tara untuk manajemen jadwal sesi dan verifikasi DP.</p>
+      </div>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Kata Sandi Admin <span class="required">*</span></label>
+          <input type="password" id="adminPasswordInput" class="form-input" placeholder="Masukkan kata sandi..."
+            required autocomplete="current-password">
+        </div>
+
+        <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+          <button type="submit" class="btn btn-primary btn-full">
+            🔓 Buka Panel Admin
+          </button>
+          <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('adminLoginModal')">
+            Batal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Tulis Ulasan & Rating (Terbuka untuk Seluruh Wisudawan) -->
+  <div class="modal-backdrop" id="writeReviewModal">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeModal('writeReviewModal')">&times;</button>
+      <h3 class="modal-title">Tulis Rating & Ulasan Pelayanan</h3>
+      <p class="modal-subtitle">Bagikan pengalaman sesi pemotretan wisuda Anda bersama tim UTARA GRADU.</p>
+
+      <form id="reviewForm" onsubmit="submitReview(event)">
+        <div class="form-group">
+          <label class="form-label">Pilih Skor Bintang <span class="required">*</span></label>
+          <div class="star-rating-input" id="starRatingPicker">
+            <span class="active" onclick="setRatingStars(1)">★</span>
+            <span class="active" onclick="setRatingStars(2)">★</span>
+            <span class="active" onclick="setRatingStars(3)">★</span>
+            <span class="active" onclick="setRatingStars(4)">★</span>
+            <span class="active" onclick="setRatingStars(5)">★</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap Wisudawan <span class="required">*</span></label>
+            <input type="text" id="reviewAuthorName" class="form-input" placeholder="contoh: Sarah Amalia, S.Ked"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Universitas / Almamater <span class="required">*</span></label>
+            <input type="text" id="reviewUniversity" class="form-input" placeholder="contoh: Universitas Indonesia"
+              required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ulasan & Testimoni Pelayanan <span class="required">*</span></label>
+          <textarea id="reviewComment" class="form-textarea"
+            placeholder="Ceritakan bagaimana keramahan fotografer, arahan pose, ketepatan waktu hadir di kampus, dan kepuasan hasil foto Anda..."
+            required style="min-height: 110px;"></textarea>
+        </div>
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('writeReviewModal')">
+            Batal
+          </button>
+          <button type="submit" class="btn btn-primary btn-full">
+            Publikasikan Ulasan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Cek Status Booking Wisudawan -->
+  <div class="modal-backdrop" id="trackBookingModal">
+    <div class="modal-box" style="max-width: 520px;">
+      <button class="modal-close-btn" onclick="closeModal('trackBookingModal')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.25rem;">
+        <div style="font-size: 2.2rem; margin-bottom: 0.25rem;">🔍🎓</div>
+        <h3 class="modal-title">Cek Status Booking</h3>
+        <p class="modal-subtitle">Pantau kepastian slot jadwal dan status verifikasi DP foto wisuda Anda.</p>
+      </div>
+
+      <form onsubmit="handleTrackBooking(event)">
+        <div style="display: flex; gap: 0.5rem;">
+          <input type="text" id="trackerCodeInput" class="form-input"
+            placeholder="Masukkan Kode Booking (e.g. WD-20261027-101)" required style="text-transform: uppercase;">
+          <button type="submit" class="btn btn-primary" style="flex-shrink: 0;">
+            Cari
+          </button>
+        </div>
+      </form>
+
+      <div id="trackerResultContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Master Package Form (Create / Edit) -->
+  <div class="modal-backdrop" id="packageFormModal">
+    <div class="modal-box modal-box-wide">
+      <button class="modal-close-btn" onclick="closeModal('packageFormModal')">&times;</button>
+      <h3 class="modal-title" id="pkgModalTitle">Tambah Paket Wisuda Baru</h3>
+      <p class="modal-subtitle">Konfigurasi harga, durasi sesi, dan fitur paket untuk katalog UTARA GRADU.</p>
+
+      <form id="packageForm" onsubmit="savePackage(event)">
+        <input type="hidden" id="pkgFormId">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nama Paket <span class="required">*</span></label>
+            <input type="text" id="pkgFormName" class="form-input" placeholder="contoh: Bestie Combo / Solo Express"
+              required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Harga Paket (IDR) <span class="required">*</span></label>
+            <input type="number" id="pkgFormPrice" class="form-input" placeholder="500000" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Durasi Sesi (Jam) <span class="required">*</span></label>
+            <select id="pkgFormDuration" class="form-select" required>
+              <option value="1">1 Jam Sesi Penuh (Jam Bulat)</option>
+              <option value="2">2 Jam Sesi Penuh (Jam Bulat)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Maksimal Peserta (Orang) <span class="required">*</span></label>
+            <input type="number" id="pkgFormMaxPersons" class="form-input" placeholder="5" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Deskripsi Singkat</label>
+          <input type="text" id="pkgFormDesc" class="form-input"
+            placeholder="Pilihan pas untuk sesi santai bersama sahabat">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Daftar Fitur / Benefit (1 baris per fitur) <span class="required">*</span></label>
+          <textarea id="pkgFormFeatures" class="form-textarea"
+            placeholder="Wisudawan + Maks. 4 Orang&#10;30 Foto Diedit (High-Resolution)&#10;Semua File Original (Drive)&#10;1 Buah Cetak 10R + Bingkai Minimalis"
+            required style="min-height: 100px;"></textarea>
+        </div>
+
+        <div style="display: flex; gap: 2rem; margin: 1rem 0;">
+          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer;">
+            <input type="checkbox" id="pkgFormPopular">
+            <span>⭐ Tandai sebagai <strong>Paling Populer</strong></span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer;">
+            <input type="checkbox" id="pkgFormActive" checked>
+            <span>Aktifkan di Katalog Publik</span>
+          </label>
+        </div>
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('packageFormModal')">
+            Batal
+          </button>
+          <button type="submit" class="btn btn-primary btn-full">
+            Simpan Paket
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 6: Lightbox Preview Foto Portofolio -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeLightbox()">&times;</button>
+      <img src="" id="lightboxImage" class="lightbox-img" alt="Preview Foto Wisuda UTARA GRADU">
+      <div id="lightboxCaption" class="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- Modal 7: Bukti Transfer Viewer (Admin) -->
+  <div class="modal-backdrop" id="proofViewerModal">
+    <div class="modal-box" style="max-width: 500px;">
+      <button class="modal-close-btn" onclick="closeModal('proofViewerModal')">&times;</button>
+      <h3 class="modal-title">Struk Bukti Transfer DP</h3>
+      <div id="proofModalInfo"
+        style="margin-bottom: 1rem; font-size: 0.88rem; background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: var(--radius-sm);">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div style="text-align: center; margin-bottom: 1.25rem;">
+        <img id="proofModalImage" src=""
+          style="max-height: 320px; width: auto; max-width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); display: inline-block;">
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('proofViewerModal')">
+          Tutup
+        </button>
+        <button type="button" class="btn btn-primary btn-full" id="proofVerifyActionBtn">
+          ✓ Verifikasi DP & Kunci Slot
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 8: Official E-Receipt Document (Print & PDF) -->
+  <div class="modal-backdrop" id="receiptModal">
+    <div class="modal-box modal-box-wide"
+      style="max-width: 660px; background: transparent; border: none; box-shadow: none; padding: 0;">
+      <div style="display: flex; justify-content: flex-end; margin-bottom: 0.75rem;" class="print-hide">
+        <button class="modal-close-btn" onclick="closeModal('receiptModal')"
+          style="position: static; font-size: 1.5rem; background: rgba(0,0,0,0.5); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: #fff;">&times;</button>
+      </div>
+
+      <div class="receipt-paper" id="receiptPaper">
+        <!-- Rendered dynamically by renderReceipt() in js/app.js -->
+      </div>
+
+      <div style="margin-top: 1rem; display: flex; gap: 0.75rem; justify-content: flex-end;" class="print-hide">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('receiptModal')">
+          Tutup
+        </button>
+        <button type="button" class="btn btn-primary" onclick="window.print()">
+          🖨️ Cetak / Simpan PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 9: Complete Session & Send Google Drive Link -->
+  <div class="modal-backdrop" id="completeBookingModal">
+    <div class="modal-box" style="max-width: 520px;">
+      <button class="modal-close-btn" onclick="closeModal('completeBookingModal')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.25rem;">
+        <div style="font-size: 2.2rem; margin-bottom: 0.25rem;">📸📁</div>
+        <h3 class="modal-title">Selesaikan Sesi Pemotretan</h3>
+        <p class="modal-subtitle">Lampirkan link Google Drive album foto wisudawan.</p>
+      </div>
+
+      <div id="completeBookingSummary"
+        style="background: rgba(12,15,23,0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1.25rem; font-size: 0.9rem;">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <form id="completeBookingForm" onsubmit="handleCompleteBookingSubmit(event)">
+        <input type="hidden" id="completeBookingId">
+        <div class="form-group">
+          <label class="form-label">Link Folder Google Drive (Edit & All Raw) <span class="required">*</span></label>
+          <input type="url" id="completeDriveLinkInput" class="form-input"
+            placeholder="https://drive.google.com/drive/folders/..." required>
+          <div class="form-hint">Pastikan izin tautan Google Drive disetel "Anyone with the link can view".</div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; cursor: pointer;">
+            <input type="checkbox" id="completeSendWaCheckbox" checked
+              style="accent-color: var(--primary); width: 18px; height: 18px;">
+            <span>Kirim notifikasi pesan WhatsApp otomatis ke wisudawan</span>
+          </label>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('completeBookingModal')">
+            Batal
+          </button>
+          <button type="submit" class="btn btn-primary btn-full">
+            ✓ Selesaikan Sesi & Kirim
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 10: Preview & Simpan Foto QRIS Resmi -->
+  <div class="modal-backdrop" id="qrisModal">
+    <div class="modal-box" style="max-width: 440px; text-align: center;">
+      <button class="modal-close-btn" onclick="closeModal('qrisModal')">&times;</button>
+      <div style="margin-bottom: 1rem;">
+        <span class="badge badge-emerald" style="margin-bottom: 0.4rem;">QRIS Standar Pembayaran Nasional</span>
+        <h3 class="modal-title" style="font-size: 1.35rem;">QRIS Resmi UTARA GRADU</h3>
+        <p class="modal-subtitle" style="font-size: 0.85rem; margin-top: 0.25rem;">
+          Scan untuk pembayaran komitmen DP sebesar <strong>Rp 100.000</strong>
+        </p>
+      </div>
+
+      <div
+        style="background: #ffffff; border-radius: var(--radius-md); padding: 0.75rem; display: inline-block; box-shadow: var(--shadow-md); margin-bottom: 1rem; border: 1px solid var(--border-subtle); max-width: 320px; width: 100%;">
+        <img src="assets/qris_utara_gradu.svg" alt="Foto QRIS UTARA GRADU" class="dynamic-qris-img"
+          style="width: 100%; height: auto; display: block; border-radius: 6px;">
+      </div>
+
+      <div
+        style="background: #faf4f2; border: 1px solid rgba(179, 66, 63, 0.16); border-radius: var(--radius-sm); padding: 0.75rem; margin-bottom: 1.25rem; font-size: 0.82rem; text-align: left;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+          <span style="color: var(--text-secondary);">Merchant:</span>
+          <strong>UTARA GRADU (Kak Tara)</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+          <span style="color: var(--text-secondary);">Nominal DP:</span>
+          <strong style="color: var(--accent-emerald);">Rp 100.000</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: var(--text-secondary);">Metode:</span>
+          <span>BCA Mobile, Livin, GoPay, OVO, Dana, ShopeePay</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <a href="assets/qris_utara_gradu.svg" download="QRIS_UTARA_GRADU.svg"
+          class="btn btn-primary btn-full dynamic-qris-link">
+          📥 Unduh Foto QRIS
+        </a>
+        <button type="button" class="btn btn-secondary" onclick="closeModal('qrisModal')">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 9: Form Tambah/Edit Foto Portofolio -->
+  <div class="modal-backdrop" id="portfolioFormModal">
+    <div class="modal-box" style="max-width: 520px;">
+      <button class="modal-close-btn" onclick="closeModal('portfolioFormModal')">&times;</button>
+      <div style="margin-bottom: 1.25rem;">
+        <h3 class="modal-title" id="portfolioModalTitle">Tambah Foto Portofolio Baru</h3>
+        <p class="modal-subtitle">Unggah atau masukkan foto dokumentasi wisuda untuk ditampilkan di galeri.</p>
+      </div>
+
+      <form id="portfolioForm" onsubmit="savePortfolioItem(event)">
+        <input type="hidden" id="portfolioFormId">
+
+        <div class="form-group">
+          <label class="form-label">Judul Foto / Konsep <span class="required">*</span></label>
+          <input type="text" id="portfolioFormTitle" class="form-input"
+            placeholder="contoh: Wisuda Ceria di Rektorat UI" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Universitas / Lokasi <span class="required">*</span></label>
+            <input type="text" id="portfolioFormUniv" class="form-input" placeholder="contoh: Universitas Indonesia"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Kategori Foto <span class="required">*</span></label>
+            <select id="portfolioFormCategory" class="form-select" required>
+              <option value="solo">Solo Portrait</option>
+              <option value="besties">Sahabat & Grup</option>
+              <option value="family">Keluarga</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Pilih Berkas Foto Gambar (JPG / PNG / WebP):</label>
+          <input type="file" id="portfolioFormFile" accept="image/*" class="form-input"
+            style="padding: 0.45rem; font-size: 0.85rem;" onchange="handlePortfolioFileChange(this)">
+          <div class="form-hint">Dapat memilih langsung dari galeri HP atau folder laptop/PC.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Atau Masukkan Tautan / Path Gambar (Opsional):</label>
+          <input type="text" id="portfolioFormUrl" class="form-input"
+            placeholder="contoh: assets/hero_graduation.jpg atau URL gambar web"
+            oninput="handlePortfolioUrlChange(this)">
+        </div>
+
+        <!-- Live Preview -->
+        <div class="form-group" style="text-align: center;">
+          <label class="form-label" style="text-align: left;">Pratinjau Foto Portofolio:</label>
+          <div
+            style="background: rgba(0,0,0,0.3); border: 1px dashed var(--border-subtle); border-radius: var(--radius-sm); padding: 0.75rem; min-height: 140px; display: flex; align-items: center; justify-content: center;">
+            <img id="portfolioFormPreview" src="assets/hero_graduation.jpg"
+              style="max-height: 180px; max-width: 100%; border-radius: 6px; object-fit: contain;">
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+          <button type="submit" class="btn btn-primary btn-full">
+            💾 Simpan Foto Portofolio
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeModal('portfolioFormModal')">
+            Batal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="brand-logo" style="margin-bottom: 0.5rem;">
+          <img src="assets/logo_utara.svg?v=2" alt="UTARA GRADU Logo" class="brand-logo-img"
+            onerror="this.onerror=null; this.src='assets/logo_utara.png?v=2'">
+          <div class="brand-text" style="color: #ffffff;">UTARA <span style="color: #f7bfc0;">GRADU</span></div>
+        </div>
+        <p>
+          Platform pemesanan foto wisuda on-location & outdoor nomor satu oleh UTARA GRADU. Menyediakan fotografer
+          profesional dengan kepastian slot jam bulat dan hasil berkualitas tinggi.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Pilihan Paket Wisuda</h4>
+        <ul class="footer-links">
+          <li><a href="#/booking" onclick="selectPackage(1); return false;">Paket Basic (1 Jam) - Rp 350.000</a></li>
+          <li><a href="#/booking" onclick="selectPackage(2); return false;">Paket Combo (2 Jam) - Rp 500.000</a></li>
+          <li><a href="#/booking" onclick="selectPackage(3); return false;">Paket Premium (2 Jam) - Rp 550.000</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Hubungi Kami</h4>
+        <ul class="footer-links">
+          <li><a href="https://wa.me/6282120776606" target="_blank">WhatsApp: +62 821-2077-6606 (Tara)</a></li>
+          <li><a href="https://instagram.com/utara.photo" target="_blank">Instagram: @utara.photo</a></li>
+          <li><span>Lokasi Layanan: Area Kampus & Outdoor</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        &copy; 2026 UTARA GRADU (@utara.photo). Seluruh Hak Cipta Dilindungi.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp Quick-Chat Button -->
+  <a href="https://wa.me/6282120776606?text=Halo%20Kak%20Tara%20UTARA%20GRADU%2C%20saya%20ingin%20tanya%20seputar%20booking%20foto%20wisuda"
+    target="_blank" class="floating-wa-btn" id="floatingWaBtn" title="Chat Langsung dengan Kak Tara via WhatsApp">
+    <span class="floating-wa-icon">💬</span>
+    <span class="floating-wa-label">Tanya Kak Tara</span>
+  </a>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Core Script -->
+  <script src="js/app.js"></script>
+</body>
+
+</html>
