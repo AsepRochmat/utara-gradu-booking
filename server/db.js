@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const { DatabaseSync } = require('node:sqlite');
 
-const dataDir = path.join(__dirname, '..', 'data');
+// Support Glitch persistent storage (.data) and standard local storage (data)
+const glitchDataDir = path.join(__dirname, '..', '.data');
+const normalDataDir = path.join(__dirname, '..', 'data');
+const dataDir = fs.existsSync(glitchDataDir) ? glitchDataDir : normalDataDir;
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
