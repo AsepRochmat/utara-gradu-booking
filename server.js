@@ -6,6 +6,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const DB = require('./server/db');
 
 const app = express();
@@ -321,11 +322,13 @@ app.patch('/api/reviews/:id/toggle', async (req, res) => {
 // ==========================================
 // STATIC FRONTEND SERVING
 // ==========================================
-app.use(express.static(path.join(__dirname)));
+const publicDir = path.join(__dirname, 'public');
+const staticDir = fs.existsSync(publicDir) ? publicDir : __dirname;
+app.use(express.static(staticDir));
 
 // Single Page Application Fallback
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(staticDir, 'index.html'));
 });
 
 // Export Express app for Vercel Serverless Functions

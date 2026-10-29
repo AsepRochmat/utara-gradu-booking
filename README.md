@@ -154,21 +154,17 @@ Aplikasi ini telah dirancang **100% Production-Ready** untuk berjalan secara gra
 web booking/
 ├── api/
 │   └── index.js                    # Serverless Function Entry Point untuk Vercel
-├── assets/
-│   ├── hero_graduation.jpg         # Foto hero potret wisudawati di Balairung
-│   ├── group_graduation.jpg        # Foto wisuda bersama keluarga di taman kampus
-│   ├── portfolio_solo_male.jpg     # Foto wisudawan formal di pilar kampus
-│   ├── portfolio_besties.jpg       # Foto selebrasi lempar toga bersama sahabat
-│   └── qris_utara_gradu.svg        # Gambar QRIS resmi UTARA GRADU
-├── css/
-│   └── style.css                   # Design system modern (CSS custom properties, glassmorphism)
+├── public/                         # Direktori Static Asset resmi Vercel CDN
+│   ├── assets/                     # Foto hero, portofolio, logo & QRIS
+│   ├── css/
+│   │   └── style.css               # Design system modern (Terracotta #b3423f)
+│   ├── js/
+│   │   └── app.js                  # Frontend Controller, ApiService & WA modal
+│   └── index.html                  # Halaman utama responsif & semantik
 ├── data/
 │   └── utara_gradu.sqlite          # Database SQLite lokal (untuk mode offline/development)
-├── js/
-│   └── app.js                      # Mesin logika aplikasi, ApiService, slot generator & WA modal
 ├── server/
 │   └── db.js                       # Dual-Mode Database DAO (Turso Cloud SQLite & Local SQLite)
-├── index.html                      # Halaman utama responsif & semantik
 ├── package.json                    # Konfigurasi dependensi Node.js (@libsql/client, express, cors)
 ├── server.js                       # Server backend Express & REST API endpoints
 ├── vercel.json                     # Konfigurasi routing serverless Vercel
