@@ -81,7 +81,7 @@ const DEFAULT_CONFIG = {
   bankName: 'Bank BCA',
   bankAccount: '1234-5678-90',
   bankHolder: 'Tara (UTARA GRADU)',
-  waNumber: '6282120776606', // Nomor WhatsApp UTARA GRADU (Tara)
+  waNumber: '6281211305181', // Nomor WhatsApp UTARA GRADU (Tara)
   defaultDp: 100000,
   qrisImage: 'assets/qris_utara_gradu.svg',
   adminPassword: 'admin123'
@@ -92,7 +92,7 @@ const DEFAULT_USERS = [
     id: 1,
     name: 'Tara (UTARA GRADU)',
     email: 'tara@utaragradu.com',
-    phone: '082120776606',
+    phone: '081211305181',
     role: 'admin',
     avatar: 'T'
   },
@@ -456,7 +456,7 @@ const ApiService = {
 
 // WhatsApp Number Sanitizer & Auto-Formatter
 window.getCleanWaNumber = function(raw) {
-  if (!raw) return '6282120776606';
+  if (!raw) return '6281211305181';
   let clean = String(raw).replace(/[^0-9]/g, '');
   if (clean.startsWith('0')) {
     clean = '62' + clean.slice(1);
@@ -468,7 +468,7 @@ window.getCleanWaNumber = function(raw) {
 
 // Synchronize all WhatsApp CTAs and quick chat buttons dynamically
 window.updateAllWaLinks = function() {
-  const wa = getCleanWaNumber(AppState.config ? AppState.config.waNumber : '6282120776606');
+  const wa = getCleanWaNumber(AppState.config ? AppState.config.waNumber : '6281211305181');
   const generalMsg = encodeURIComponent("Halo Kak Tara UTARA GRADU, saya ingin tanya seputar booking foto wisuda");
   const waUrl = `https://api.whatsapp.com/send?phone=${wa}&text=${generalMsg}`;
 
@@ -1136,7 +1136,7 @@ Saya ingin melakukan konfirmasi booking foto wisuda:
 Mohon informasikan slot jadwal saya telah diamankan. Terima kasih! ✨`;
 
   const encodedText = encodeURIComponent(waText);
-  const targetWa = getCleanWaNumber(AppState.config ? AppState.config.waNumber : '6282120776606');
+  const targetWa = getCleanWaNumber(AppState.config ? AppState.config.waNumber : '6281211305181');
   const waUrl = `https://api.whatsapp.com/send?phone=${targetWa}&text=${encodedText}`;
 
   if (waBtnEl) {
@@ -2072,7 +2072,7 @@ window.renderReceipt = function(booking) {
         <div class="receipt-brand-title">UTARA <span>GRADU</span></div>
         <div class="receipt-brand-sub">Official Graduation Photography Service & On-Location Studio</div>
         <div style="font-size: 0.78rem; color: #64748b; margin-top: 0.2rem;">
-          Instagram: @utara.photo | WA: +62 821-2077-6606 (Kak Tara)
+          Instagram: @utara.photo | WA: +62 812-1130-5181 (Kak Tara)
         </div>
       </div>
       <div class="receipt-code-box">

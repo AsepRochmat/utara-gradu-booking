@@ -58,6 +58,15 @@ app.put('/api/config', async (req, res) => {
   }
 });
 
+app.post('/api/config', async (req, res) => {
+  try {
+    const updated = await DB.updateConfig(req.body);
+    res.json({ success: true, config: updated, message: 'Pengaturan berhasil diperbarui.' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // 2. PACKAGES
 app.get('/api/packages', async (req, res) => {
   try {

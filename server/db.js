@@ -34,7 +34,7 @@ const DEFAULT_CONFIG = {
   bankName: 'Bank BCA',
   bankAccount: '1234-5678-90',
   bankHolder: 'Tara (UTARA GRADU)',
-  waNumber: '6282120776606',
+  waNumber: '6281211305181',
   defaultDp: '100000',
   qrisImage: 'assets/qris_utara_gradu.svg',
   adminPassword: 'admin123'
