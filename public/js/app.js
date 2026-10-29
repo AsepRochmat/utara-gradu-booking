@@ -454,12 +454,47 @@ const ApiService = {
   }
 };
 
+// WhatsApp Number Sanitizer & Auto-Formatter
+window.getCleanWaNumber = function(raw) {
+  if (!raw) return '6282120776606';
+  let clean = String(raw).replace(/[^0-9]/g, '');
+  if (clean.startsWith('0')) {
+    clean = '62' + clean.slice(1);
+  } else if (clean.startsWith('8')) {
+    clean = '62' + clean;
+  }
+  return clean;
+};
+
+// Synchronize all WhatsApp CTAs and quick chat buttons dynamically
+window.updateAllWaLinks = function() {
+  const wa = getCleanWaNumber(AppState.config ? AppState.config.waNumber : '6282120776606');
+  const generalMsg = encodeURIComponent("Halo Kak Tara UTARA GRADU, saya ingin tanya seputar booking foto wisuda");
+  const waUrl = `https://api.whatsapp.com/send?phone=${wa}&text=${generalMsg}`;
+
+  const floatingBtn = document.getElementById('floatingWaBtn');
+  if (floatingBtn) floatingBtn.href = waUrl;
+
+  const drawerWaBtn = document.getElementById('drawerWaBtn');
+  if (drawerWaBtn) drawerWaBtn.href = waUrl;
+
+  const ctaWaBtn = document.getElementById('ctaWaBtn');
+  if (ctaWaBtn) ctaWaBtn.href = waUrl;
+
+  const footerWaLink = document.getElementById('footerWaLink');
+  if (footerWaLink) {
+    footerWaLink.href = `https://api.whatsapp.com/send?phone=${wa}`;
+    footerWaLink.innerText = `WhatsApp: +${wa.slice(0, 2)} ${wa.slice(2, 5)}-${wa.slice(5, 9)}-${wa.slice(9)} (Tara)`;
+  }
+};
+
 // Background synchronization from Express + SQLite
 async function syncDataFromBackend() {
   try {
     const online = await ApiService.isOnline();
     if (!online) {
       console.log('⚡ UTARA GRADU: Berjalan dalam mode local storage.');
+      updateAllWaLinks();
       return;
     }
 
@@ -507,6 +542,7 @@ async function syncDataFromBackend() {
     renderAdminTable();
     if (typeof renderAdminCalendar === 'function') renderAdminCalendar();
     renderQrisImages();
+    updateAllWaLinks();
     console.log('✅ UTARA GRADU: Berhasil tersinkronisasi dengan Database SQLite server!');
   } catch (err) {
     console.warn('Sinkronisasi backend error:', err);
@@ -1100,7 +1136,8 @@ Saya ingin melakukan konfirmasi booking foto wisuda:
 Mohon informasikan slot jadwal saya telah diamankan. Terima kasih! ✨`;
 
   const encodedText = encodeURIComponent(waText);
-  const waUrl = `https://wa.me/${AppState.config.waNumber}?text=${encodedText}`;
+  const targetWa = getCleanWaNumber(AppState.config ? AppState.config.waNumber : '6282120776606');
+  const waUrl = `https://api.whatsapp.com/send?phone=${targetWa}&text=${encodedText}`;
 
   if (waBtnEl) {
     waBtnEl.href = waUrl;
@@ -1652,8 +1689,8 @@ function populateAdminSettings() {
 window.handleSaveSettings = async function(e) {
   e.preventDefault();
   AppState.config.bankAccount = document.getElementById('settingBankAccount').value.trim();
-  AppState.config.bankHolder = document.getElementById('settingBankHolder').value.trim();
-  AppState.config.waNumber = document.getElementById('settingWaNumber').value.trim();
+  const rawWa = document.getElementById('settingWaNumber').value.trim();
+  AppState.config.waNumber = getCleanWaNumber(rawWa);
   AppState.config.defaultDp = Number(document.getElementById('settingDpAmount').value) || 100000;
 
   const newAdminPwd = (document.getElementById('settingAdminPassword')?.value || '').trim();
@@ -1670,6 +1707,7 @@ window.handleSaveSettings = async function(e) {
   await ApiService.saveConfig(AppState.config);
   updateOrderSummary();
   renderQrisImages();
+  updateAllWaLinks();
   
   if (newAdminPwd) {
     showToast('Pengaturan & Kata Sandi Admin baru berhasil disimpan!', 'success');
@@ -2725,6 +2763,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof renderAdminPortfolio === 'function') renderAdminPortfolio();
   updateAuthUI();
   renderQrisImages();
+  updateAllWaLinks();
   if (typeof renderAdminCalendar === 'function') renderAdminCalendar();
 
   // Async sync from Express + SQLite backend
