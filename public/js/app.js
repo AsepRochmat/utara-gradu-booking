@@ -8,13 +8,13 @@
 // 1. STATE & LOCALSTORAGE PERSISTENCE
 // ==========================================
 const STORAGE_KEYS = {
-  PACKAGES: 'utara_packages_v2',
-  CONFIG: 'utara_config_v2',
-  BOOKINGS: 'utara_bookings_v2',
-  REVIEWS: 'utara_reviews_v2',
-  USERS: 'utara_users_v2',
-  CURRENT_USER: 'utara_current_user_v2',
-  PORTFOLIO: 'utara_portfolio_v2'
+  PACKAGES: 'utara_packages_v3',
+  CONFIG: 'utara_config_v3',
+  BOOKINGS: 'utara_bookings_v3',
+  REVIEWS: 'utara_reviews_v3',
+  USERS: 'utara_users_v3',
+  CURRENT_USER: 'utara_current_user_v3',
+  PORTFOLIO: 'utara_portfolio_v3'
 };
 
 // Initial Seed Data - UTARA GRADU
@@ -83,7 +83,8 @@ const DEFAULT_CONFIG = {
   bankHolder: 'Tara (UTARA GRADU)',
   waNumber: '6282120776606', // Nomor WhatsApp UTARA GRADU (Tara)
   defaultDp: 100000,
-  qrisImage: 'assets/qris_utara_gradu.svg'
+  qrisImage: 'assets/qris_utara_gradu.svg',
+  adminPassword: 'admin123'
 };
 
 const DEFAULT_USERS = [
@@ -105,111 +106,14 @@ const DEFAULT_USERS = [
   }
 ];
 
-const DEFAULT_REVIEWS = [
-  {
-    id: 1,
-    userId: 2,
-    userName: 'Sarah Amalia, S.Ked',
-    university: 'Universitas Indonesia',
-    rating: 5,
-    comment: 'Pelayanannya super ramah dan sabar banget mengarahkan pose wisuda buat aku dan keluarga! Hasil fotonya jernih banget, editingnya natural, dan slot waktunya bener-bener tepat waktu.',
-    date: '2026-10-20',
-    isVerified: true,
-    isPublished: true
-  },
-  {
-    id: 2,
-    userId: 3,
-    userName: 'Dimas Anggara, S.T',
-    university: 'Institut Teknologi Bandung',
-    rating: 5,
-    comment: 'Puas banget ambil paket Combo 2 jam. Kakak fotografernya tau spot-spot estetik di kampus ITB, anak-anak sekelompok pada suka hasilnya. Konfirmasi via WA juga cepet dan jelas.',
-    date: '2026-10-22',
-    isVerified: true,
-    isPublished: true
-  },
-  {
-    id: 3,
-    userId: 4,
-    userName: 'Nabila Putri, S.I.Kom',
-    university: 'Universitas Padjadjaran',
-    rating: 5,
-    comment: 'Rekomendasi terbaik buat foto wisuda outdoor! Cetakan bingkainya rapi dan tebal, file drive dikirim lengkap tanpa ada yang kurang.',
-    date: '2026-10-24',
-    isVerified: true,
-    isPublished: true
-  }
-];
+const DEFAULT_REVIEWS = [];
 
-// Initial bookings to demonstrate booked slots
+// Initial bookings (empty for fresh production launch)
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 const dateStrTomorrow = tomorrow.toISOString().split('T')[0];
 
-const DEFAULT_BOOKINGS = [
-  {
-    id: 1,
-    bookingCode: 'WD-20261027-101',
-    packageId: 2,
-    packageName: 'Combo',
-    duration: 2,
-    customerName: 'Rian Pratama',
-    customerPhone: '081345678912',
-    instagram: 'rianpratama_',
-    university: 'Universitas Indonesia',
-    location: 'Taman Danau Rektorat UI Depok',
-    bookingDate: dateStrTomorrow,
-    sessionStart: '08:00',
-    sessionEnd: '10:00',
-    totalPrice: 500000,
-    downPayment: 100000,
-    status: 'CONFIRMED',
-    notes: 'Membawa 1 lansia kursi roda',
-    createdAt: '2026-10-25 09:30'
-  },
-  {
-    id: 2,
-    bookingCode: 'WD-20261027-102',
-    packageId: 1,
-    packageName: 'Basic',
-    duration: 1,
-    customerName: 'Anindita Zahra',
-    customerPhone: '081288899911',
-    instagram: 'aninditazhr',
-    university: 'Universitas Negeri Jakarta',
-    location: 'Depan Gedung Rektorat UNJ Rawamangun',
-    bookingDate: dateStrTomorrow,
-    sessionStart: '13:00',
-    sessionEnd: '14:00',
-    totalPrice: 350000,
-    downPayment: 100000,
-    status: 'PENDING_DP',
-    notes: 'Foto solo dengan toga dan selempang gelar',
-    createdAt: '2026-10-25 14:15'
-  },
-  {
-    id: 3,
-    bookingCode: 'WD-20261026-103',
-    packageId: 3,
-    packageName: 'Premium',
-    duration: 2,
-    customerName: 'Sarah Amalia',
-    customerPhone: '081234567890',
-    instagram: 'sarahamalia_',
-    university: 'Institut Teknologi Bandung',
-    location: 'Gedung Aula Barat ITB Ganesha',
-    bookingDate: new Date().toISOString().split('T')[0],
-    sessionStart: '10:00',
-    sessionEnd: '12:00',
-    totalPrice: 550000,
-    downPayment: 100000,
-    status: 'COMPLETED',
-    notes: 'Prioritas edit 3 hari',
-    driveLink: 'https://drive.google.com/drive/folders/utara-gradu-sarah-amalia-sample',
-    completedAt: '2026-10-26 13:00',
-    createdAt: '2026-10-24 11:20'
-  }
-];
+const DEFAULT_BOOKINGS = [];
 
 const DEFAULT_PORTFOLIO_ITEMS = [
   {
@@ -574,7 +478,7 @@ async function syncDataFromBackend() {
       AppState.packages = remotePackages;
       AppStore.set(STORAGE_KEYS.PACKAGES, AppState.packages);
     }
-    if (remoteBookings && remoteBookings.length > 0) {
+    if (Array.isArray(remoteBookings)) {
       AppState.bookings = remoteBookings;
       AppStore.set(STORAGE_KEYS.BOOKINGS, AppState.bookings);
     }
@@ -582,7 +486,7 @@ async function syncDataFromBackend() {
       AppState.portfolio = remotePortfolio;
       AppStore.set(STORAGE_KEYS.PORTFOLIO, AppState.portfolio);
     }
-    if (remoteReviews && remoteReviews.length > 0) {
+    if (Array.isArray(remoteReviews)) {
       AppState.reviews = remoteReviews;
       AppStore.set(STORAGE_KEYS.REVIEWS, AppState.reviews);
     }
@@ -1251,9 +1155,10 @@ window.openAdminLoginModal = function() {
 window.handleAdminLogin = function(e) {
   e.preventDefault();
   const pwd = (document.getElementById('adminPasswordInput')?.value || '').trim();
+  const validPwd = AppState.config?.adminPassword || 'admin123';
   
-  // Kata sandi admin: admin123 (juga menerima tara123)
-  if (pwd === 'admin123' || pwd === 'tara123') {
+  // Kata sandi admin: dinamis sesuai konfigurasi, juga menerima fallback bawaan
+  if (pwd === validPwd || pwd === 'admin123' || pwd === 'tara123') {
     AppState.isAdminLoggedIn = true;
     localStorage.setItem('utara_admin_logged_in', 'true');
     closeModal('adminLoginModal');
@@ -1724,6 +1629,8 @@ function populateAdminSettings() {
   if (qrisPreview) {
     qrisPreview.src = AppState.config.qrisImage || 'assets/qris_utara_gradu.svg';
   }
+  const adminPwdInput = document.getElementById('settingAdminPassword');
+  if (adminPwdInput) adminPwdInput.value = '';
 }
 
 window.handleSaveSettings = async function(e) {
@@ -1732,6 +1639,11 @@ window.handleSaveSettings = async function(e) {
   AppState.config.bankHolder = document.getElementById('settingBankHolder').value.trim();
   AppState.config.waNumber = document.getElementById('settingWaNumber').value.trim();
   AppState.config.defaultDp = Number(document.getElementById('settingDpAmount').value) || 100000;
+
+  const newAdminPwd = (document.getElementById('settingAdminPassword')?.value || '').trim();
+  if (newAdminPwd) {
+    AppState.config.adminPassword = newAdminPwd;
+  }
 
   if (window.tempQrisBase64) {
     AppState.config.qrisImage = window.tempQrisBase64;
@@ -1742,7 +1654,14 @@ window.handleSaveSettings = async function(e) {
   await ApiService.saveConfig(AppState.config);
   updateOrderSummary();
   renderQrisImages();
-  showToast('Pengaturan Rekening, WhatsApp, dan Foto QRIS berhasil disimpan ke Server!', 'success');
+  
+  if (newAdminPwd) {
+    showToast('Pengaturan & Kata Sandi Admin baru berhasil disimpan!', 'success');
+    const pwdInput = document.getElementById('settingAdminPassword');
+    if (pwdInput) pwdInput.value = '';
+  } else {
+    showToast('Pengaturan Rekening, WhatsApp, dan Foto QRIS berhasil disimpan ke Server!', 'success');
+  }
 };
 
 // ==========================================

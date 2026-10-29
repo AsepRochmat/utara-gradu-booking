@@ -36,7 +36,8 @@ const DEFAULT_CONFIG = {
   bankHolder: 'Tara (UTARA GRADU)',
   waNumber: '6282120776606',
   defaultDp: '100000',
-  qrisImage: 'assets/qris_utara_gradu.svg'
+  qrisImage: 'assets/qris_utara_gradu.svg',
+  adminPassword: 'admin123'
 };
 
 const DEFAULT_PACKAGES = [
@@ -130,41 +131,7 @@ const DEFAULT_PORTFOLIO = [
   }
 ];
 
-const DEFAULT_REVIEWS = [
-  {
-    id: 1,
-    userId: 2,
-    userName: 'Sarah Amalia, S.Ked',
-    university: 'Universitas Indonesia',
-    rating: 5,
-    comment: 'Pelayanannya super ramah dan sabar banget mengarahkan pose wisuda buat aku dan keluarga! Hasil fotonya jernih banget, editingnya natural, dan slot waktunya bener-bener tepat waktu.',
-    date: '2026-10-20',
-    isVerified: 1,
-    isPublished: 1
-  },
-  {
-    id: 2,
-    userId: 3,
-    userName: 'Dimas Anggara, S.T',
-    university: 'Institut Teknologi Bandung',
-    rating: 5,
-    comment: 'Puas banget ambil paket Combo 2 jam. Kakak fotografernya tau spot-spot estetik di kampus ITB, anak-anak sekelompok pada suka hasilnya. Konfirmasi via WA juga cepet dan jelas.',
-    date: '2026-10-22',
-    isVerified: 1,
-    isPublished: 1
-  },
-  {
-    id: 3,
-    userId: 4,
-    userName: 'Nabila Putri, S.I.Kom',
-    university: 'Universitas Padjadjaran',
-    rating: 5,
-    comment: 'Fotografer dari UTARA GRADU top banget! Nggak kaku, seru, dan semua file mentah langsung dikirim via Google Drive malam itu juga. Cetakan 10R-nya rapi banget!',
-    date: '2026-10-25',
-    isVerified: 1,
-    isPublished: 1
-  }
-];
+const DEFAULT_REVIEWS = [];
 
 // Initialize Tables & Seed
 async function initSchema() {
@@ -257,6 +224,9 @@ async function initSchema() {
       }
       console.log('✅ Turso Database Seeded Successfully!');
     }
+    // Clean any initial dummy reviews or dummy bookings for fresh launch
+    await tursoClient.execute("DELETE FROM reviews WHERE userId IN (2, 3, 4) OR comment LIKE '%Pelayanannya super ramah%'");
+    await tursoClient.execute("DELETE FROM bookings WHERE bookingCode IN ('WD-20261027-101', 'WD-20261027-102', 'WD-20261026-103')");
   } else {
     // Local SQLite
     for (const sql of schemaSqls) {
@@ -281,6 +251,9 @@ async function initSchema() {
         revStmt.run(r.id, r.userId, r.userName, r.university, r.rating, r.comment, r.date, r.isVerified, r.isPublished);
       }
     }
+    // Clean any initial dummy reviews or dummy bookings for fresh launch
+    db.exec("DELETE FROM reviews WHERE userId IN (2, 3, 4) OR comment LIKE '%Pelayanannya super ramah%'");
+    db.exec("DELETE FROM bookings WHERE bookingCode IN ('WD-20261027-101', 'WD-20261027-102', 'WD-20261026-103')");
   }
 }
 
@@ -301,6 +274,7 @@ const DB = {
           config[r.key] = r.value;
         }
       }
+      if (!config.adminPassword) config.adminPassword = 'admin123';
       return config;
     } else {
       const rows = db.prepare('SELECT key, value FROM config').all();
@@ -312,6 +286,7 @@ const DB = {
           config[r.key] = r.value;
         }
       }
+      if (!config.adminPassword) config.adminPassword = 'admin123';
       return config;
     }
   },
