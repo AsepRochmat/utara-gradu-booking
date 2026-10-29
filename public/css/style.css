@@ -257,6 +257,8 @@ img {
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .brand-logo-img {
@@ -286,6 +288,11 @@ img {
   font-size: 1.25rem;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(179, 66, 63, 0.25);
+}
+
+.brand-text {
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .brand-text span {
@@ -326,20 +333,23 @@ img {
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 /* User Account Pill in Nav */
 .user-profile-badge {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  padding: 0.35rem 0.85rem 0.35rem 0.45rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.45rem;
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .user-profile-badge:hover {
@@ -347,26 +357,32 @@ img {
 }
 
 .user-avatar-small {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #06b6d4, #8b5cf6);
-  color: white;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #0f172a;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 .user-name-small {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-main);
-  max-width: 110px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+}
+
+.mobile-admin-label {
+  display: none !important;
+}
+
+.desktop-admin-label {
+  display: inline !important;
 }
 
 
@@ -2808,6 +2824,72 @@ img {
   border-radius: 4px;
 }
 
+/* Custom Date Input Styling - Unified iOS Safari & Modern Desktop */
+.date-input-wrapper {
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  display: block;
+}
+
+.date-input-wrapper .form-input,
+input[type="date"].form-input {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  text-align: left !important;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background-color: #ffffff;
+  padding: 0.75rem 2.85rem 0.75rem 1rem !important;
+  border: 1.5px solid rgba(179, 66, 63, 0.22);
+  border-radius: var(--radius-md);
+  min-height: 48px;
+  line-height: normal;
+  display: block;
+}
+
+/* iOS Safari Date Picker Shadow DOM internal text alignment */
+input[type="date"]::-webkit-date-and-time-value {
+  text-align: left !important;
+  min-height: 1.4em !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--text-main) !important;
+  font-size: 0.95rem !important;
+  font-family: var(--font-body) !important;
+}
+
+/* Desktop WebKit calendar picker indicator */
+.date-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.date-input-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.15rem;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+}
+
 @media (max-width: 960px) {
   .booking-grid {
     grid-template-columns: 1fr !important;
@@ -2816,6 +2898,53 @@ img {
 }
 
 @media (max-width: 640px) {
+  .nav-container {
+    padding: 0 0.85rem !important;
+    height: 60px !important;
+  }
+  .brand-logo {
+    font-size: 1.05rem !important;
+    gap: 0.45rem !important;
+    white-space: nowrap !important;
+  }
+  .brand-logo-img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .brand-text {
+    font-size: 1.02rem !important;
+    white-space: nowrap !important;
+  }
+  .nav-actions {
+    gap: 0.4rem !important;
+  }
+  .user-profile-badge {
+    padding: 0.25rem 0.5rem 0.25rem 0.35rem !important;
+    gap: 0.35rem !important;
+  }
+  .user-avatar-small {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 0.75rem !important;
+  }
+  .user-name-small {
+    font-size: 0.78rem !important;
+  }
+  .desktop-admin-label {
+    display: none !important;
+  }
+  .mobile-admin-label {
+    display: inline !important;
+  }
+  .admin-logout-btn {
+    font-size: 0.72rem !important;
+    margin-left: 0.15rem !important;
+  }
+  .hamburger-btn {
+    padding: 0.35rem 0.55rem !important;
+    font-size: 1.1rem !important;
+  }
+
   .booking-section {
     padding: 2.5rem 0 !important;
   }
@@ -2824,7 +2953,7 @@ img {
     border-radius: var(--radius-md) !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    overflow: hidden;
+    overflow: visible !important;
   }
   .form-step {
     width: 100% !important;
@@ -2879,14 +3008,20 @@ img {
   .slot-status-tag {
     font-size: 0.68rem !important;
   }
+  .date-input-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
   input[type="date"].form-input {
     width: 100% !important;
     max-width: 100% !important;
     min-height: 48px !important;
     font-size: 0.95rem !important;
-    padding: 0.75rem 0.85rem !important;
+    padding: 0.75rem 2.85rem 0.75rem 1rem !important;
     box-sizing: border-box !important;
     display: block !important;
+    text-align: left !important;
   }
   .qris-payment-box {
     grid-template-columns: 1fr !important;
@@ -2912,6 +3047,9 @@ img {
     flex-shrink: 0 !important;
     font-size: 0.82rem !important;
     padding: 0.55rem 0.85rem !important;
+  }
+  .admin-portfolio-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 

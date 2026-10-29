@@ -1206,17 +1206,29 @@ function updateAuthUI() {
       authContainer.innerHTML = `
         <div class="user-profile-badge" onclick="handleAdminLogout()" title="Klik untuk keluar dari mode Admin">
           <div class="user-avatar-small" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #0f172a; font-weight: 800;">👑</div>
-          <span class="user-name-small">Tara (Admin)</span>
-          <span style="font-size: 0.75rem; color: var(--accent-rose); margin-left: 0.25rem; font-weight: 700;">[Keluar]</span>
+          <span class="user-name-small">
+            <span class="desktop-admin-label">Tara (Admin)</span>
+            <span class="mobile-admin-label">Admin</span>
+          </span>
+          <span class="admin-logout-btn" style="font-size: 0.75rem; color: var(--accent-rose); margin-left: 0.25rem; font-weight: 700;">[Keluar]</span>
         </div>
       `;
     }
 
     if (drawerAdminContainer) {
       drawerAdminContainer.innerHTML = `
-        <button type="button" class="btn btn-secondary btn-full btn-sm" onclick="handleAdminLogout()" style="color: var(--accent-rose); margin-bottom: 0.5rem;">
-          🚪 Keluar dari Akun Admin
-        </button>
+        <div style="background: rgba(179,66,63,0.06); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.75rem; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 1.15rem;">👑</span>
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">Kak Tara</div>
+              <div style="font-size: 0.72rem; color: var(--text-secondary);">Admin UTARA GRADU</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-xs" onclick="handleAdminLogout()" style="color: var(--accent-rose);">
+            Keluar
+          </button>
+        </div>
       `;
     }
 
@@ -1228,7 +1240,7 @@ function updateAuthUI() {
     if (authContainer) {
       authContainer.innerHTML = `
         <button type="button" class="btn btn-outline-gold btn-sm" onclick="openAdminLoginModal()" id="navAdminBtn">
-          🔒 Admin
+          🔒 <span class="desktop-admin-label">Admin</span><span class="mobile-admin-label">Admin</span>
         </button>
       `;
     }
