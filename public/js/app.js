@@ -373,7 +373,8 @@ const ApiService = {
       const res = await fetch('/api/portfolio');
       if (res.ok) {
         const json = await res.json();
-        return Array.isArray(json) ? json : (json.portfolio || json.data || []);
+        const list = Array.isArray(json) ? json : (json.portfolio || json.data || []);
+        if (list.length > 0) return list;
       }
     } catch (e) {
       console.warn('Backend getPortfolio error:', e);
@@ -484,6 +485,9 @@ async function syncDataFromBackend() {
     }
     if (remotePortfolio && remotePortfolio.length > 0) {
       AppState.portfolio = remotePortfolio;
+      AppStore.set(STORAGE_KEYS.PORTFOLIO, AppState.portfolio);
+    } else if (!AppState.portfolio || AppState.portfolio.length === 0) {
+      AppState.portfolio = [...DEFAULT_PORTFOLIO_ITEMS];
       AppStore.set(STORAGE_KEYS.PORTFOLIO, AppState.portfolio);
     }
     if (Array.isArray(remoteReviews)) {

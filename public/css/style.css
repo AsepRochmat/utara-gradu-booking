@@ -2808,18 +2808,119 @@ img {
   border-radius: 4px;
 }
 
-@media (max-width: 640px) {
-  .qris-payment-box {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    padding: 1.15rem;
+@media (max-width: 960px) {
+  .booking-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
   }
-  .qris-card-preview {
-    max-width: 180px;
+}
+
+@media (max-width: 640px) {
+  .booking-section {
+    padding: 2.5rem 0 !important;
+  }
+  .booking-card-wrapper {
+    padding: 1.25rem 0.85rem !important;
+    border-radius: var(--radius-md) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden;
+  }
+  .form-step {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .form-group {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
   .duration-selector-grid {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+  }
+  .duration-card-btn {
+    padding: 0.85rem 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .package-selector-pills {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+  .package-pill-btn {
+    flex: 1 1 calc(50% - 0.5rem) !important;
+    justify-content: center !important;
+    font-size: 0.82rem !important;
+    padding: 0.6rem 0.5rem !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+  .slot-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .slot-btn {
+    width: 100% !important;
+    padding: 0.65rem 0.25rem !important;
+    font-size: 0.82rem !important;
+    box-sizing: border-box !important;
+  }
+  .slot-btn span {
+    white-space: nowrap !important;
+    font-size: 0.82rem !important;
+  }
+  .slot-status-tag {
+    font-size: 0.68rem !important;
+  }
+  input[type="date"].form-input {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 48px !important;
+    font-size: 0.95rem !important;
+    padding: 0.75rem 0.85rem !important;
+    box-sizing: border-box !important;
+    display: block !important;
+  }
+  .qris-payment-box {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+    padding: 1.15rem !important;
+  }
+  .qris-card-preview {
+    max-width: 180px !important;
+  }
+  .admin-tabs {
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 0.5rem !important;
+    gap: 0.45rem !important;
+    scrollbar-width: none !important;
+  }
+  .admin-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+  .admin-tab-btn {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    font-size: 0.82rem !important;
+    padding: 0.55rem 0.85rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .slot-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .package-pill-btn {
+    flex: 1 1 100% !important;
   }
 }
 

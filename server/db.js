@@ -224,6 +224,18 @@ async function initSchema() {
       }
       console.log('✅ Turso Database Seeded Successfully!');
     }
+    // Ensure portfolio is populated if empty
+    const checkPort = await tursoClient.execute('SELECT count(*) as count FROM portfolio');
+    if (Number(checkPort.rows[0]?.count || 0) === 0) {
+      for (const item of DEFAULT_PORTFOLIO) {
+        await tursoClient.execute({
+          sql: 'INSERT INTO portfolio (id, title, category, categoryName, university, image) VALUES (?, ?, ?, ?, ?, ?)',
+          args: [item.id, item.title, item.category, item.categoryName, item.university, item.image]
+        });
+      }
+      console.log('✅ Seeded default portfolio items to Turso');
+    }
+
     // Clean any initial dummy reviews or dummy bookings for fresh launch
     await tursoClient.execute("DELETE FROM reviews WHERE userId IN (2, 3, 4) OR comment LIKE '%Pelayanannya super ramah%'");
     await tursoClient.execute("DELETE FROM bookings WHERE bookingCode IN ('WD-20261027-101', 'WD-20261027-102', 'WD-20261026-103')");
@@ -251,6 +263,16 @@ async function initSchema() {
         revStmt.run(r.id, r.userId, r.userName, r.university, r.rating, r.comment, r.date, r.isVerified, r.isPublished);
       }
     }
+
+    // Ensure portfolio is populated if empty
+    const portRow = db.prepare('SELECT count(*) as count FROM portfolio').get();
+    if (Number(portRow?.count || 0) === 0) {
+      const portStmt = db.prepare('INSERT INTO portfolio (id, title, category, categoryName, university, image) VALUES (?, ?, ?, ?, ?, ?)');
+      for (const item of DEFAULT_PORTFOLIO) {
+        portStmt.run(item.id, item.title, item.category, item.categoryName, item.university, item.image);
+      }
+    }
+
     // Clean any initial dummy reviews or dummy bookings for fresh launch
     db.exec("DELETE FROM reviews WHERE userId IN (2, 3, 4) OR comment LIKE '%Pelayanannya super ramah%'");
     db.exec("DELETE FROM bookings WHERE bookingCode IN ('WD-20261027-101', 'WD-20261027-102', 'WD-20261026-103')");
