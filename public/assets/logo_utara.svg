@@ -7,20 +7,23 @@
     <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
       <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(0,0,0,0.3)" />
     </filter>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&amp;display=swap');
+    </style>
   </defs>
   <!-- Background circle with terracotta gradient -->
   <circle cx="300" cy="300" r="288" fill="url(#terracottaGrad)" />
   <!-- Subtle white border ring -->
   <circle cx="300" cy="300" r="278" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" />
-  <!-- HD crisp UTARA text - clean vector, not traced paths -->
+  <!-- UTARA text with elegant Didone serif matching reference image -->
   <text
     x="300"
-    y="362"
+    y="365"
     text-anchor="middle"
-    font-family="Inter, Montserrat, Arial Black, sans-serif"
-    font-weight="900"
-    font-size="148"
-    letter-spacing="10"
+    font-family="'Cormorant Garamond', 'Bodoni Moda', 'Didot', 'Playfair Display', Georgia, serif"
+    font-weight="700"
+    font-size="155"
+    letter-spacing="8"
     fill="#ffffff"
     filter="url(#softShadow)"
   >UTARA</text>
