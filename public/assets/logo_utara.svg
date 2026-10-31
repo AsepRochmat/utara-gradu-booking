@@ -13,8 +13,6 @@
   </defs>
   <!-- Background circle with terracotta gradient -->
   <circle cx="300" cy="300" r="288" fill="url(#terracottaGrad)" />
-  <!-- Subtle white border ring -->
-  <circle cx="300" cy="300" r="278" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" />
   <!-- UTARA text with elegant Didone serif matching reference image -->
   <text
     x="300"
